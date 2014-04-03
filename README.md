@@ -1,4 +1,4 @@
- TD exmaples and katas in different programming languages
+ TDD Examples and katas 
 =========================================================
 
 
