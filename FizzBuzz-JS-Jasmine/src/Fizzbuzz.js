@@ -1,24 +1,14 @@
 IDontKnow = "";
 
-function fizzFilter(value) {
-    if ((value % 3) == 0)
-        return "Fizz";
-    return IDontKnow;
+/**
+Too many methods. Encapsulate them in a data structure
+*/
+function valueFilter(value, number, result, previous) {
+    if ((value % number) == 0)
+        return previous + result;
+    return previous;
 }
 
-// Buzzfilter and whizzFilter are too similar. Refactorization needed
-
-function buzzFilter(value, result) {
-    if ((value % 5) == 0)
-        return result + "Buzz";
-    return result;
-}
-
-function whizzFilter(value, result) {
-    if ((value % 7) == 0)
-        return result + "Whizz";
-    return result;
-}
 
 function numFilter(value, result) {
     if (result == IDontKnow)
@@ -29,9 +19,9 @@ function numFilter(value, result) {
 function fizbuzzTo(limit) {
     values = []
     for (var i = 1; i <= limit; i++) {
-        result = fizzFilter(i);
-        result = buzzFilter(i, result);
-        result = whizzFilter(i, result);
+        result = valueFilter(i, 3, "Fizz", IDontKnow);
+        result = valueFilter(i, 5, "Buzz", result);
+        result = valueFilter(i, 7, "Whizz", result);
         result = numFilter(i, result);
         values.push(result);
     };
