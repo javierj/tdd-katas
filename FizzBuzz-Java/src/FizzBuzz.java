@@ -4,11 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class Filter {
+interface FilterValue {
+	public String doValue(List<String> numbers, int number, String result);
+}
+
+
+class Filter implements FilterValue {
 	
 	private int checkValue;
 	private String replacement;
 
+	/**
+	 * 
+	 * @param checkValue
+	 * @param replacement
+	 */
 	public Filter(int checkValue, String replacement) {
 		super();
 		this.checkValue = checkValue;
@@ -28,7 +38,7 @@ class Filter {
 }
 
 
-class NumberFilter {
+class NumberFilter implements FilterValue {
 	public String doValue(List<String> numbers, int number, String result) {
 		 if (result.compareTo(FizzBuzz.idontknow) == 0) {
 			return String.valueOf(number);
@@ -42,22 +52,25 @@ class NumberFilter {
 public class FizzBuzz {
 
 	static final String idontknow = "";
+	List<FilterValue> filters = new ArrayList<>();
 	
 	public List<String> createFor(int limit) {
 		List<String> numbers = new ArrayList<>();
-		
-		String result;
-		Filter fizzFilter = new Filter(3, "Fizz");
-		Filter buzzFilter = new Filter(5, "Buzz");
-		NumberFilter number = new NumberFilter();
+		String result = idontknow;
+
 		for (int i = 1; i <= limit; i++) {
-			result = fizzFilter.doValue(numbers, i, idontknow);
-			result = buzzFilter.doValue(numbers, i, result);
-			result = number.doValue(numbers, i, result);
+			result = idontknow;
+			for(FilterValue filter: filters) {
+				result = filter.doValue(numbers, i, result);
+			}
 			numbers.add(result);
 		}
 		
 		return numbers;
+	}
+
+	public void addFilter(FilterValue filter) {
+		this.filters.add(filter);
 	}
 
 }

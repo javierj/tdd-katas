@@ -15,6 +15,9 @@ public class TestFizzBuzz {
 	@Before
 	public void setUp() throws Exception {
 		fizzbuzz = new FizzBuzz();
+		fizzbuzz.addFilter( new Filter(3, "Fizz") );
+		fizzbuzz.addFilter( new Filter(5, "Buzz") );
+		fizzbuzz.addFilter( new NumberFilter() );
 	}
 
 	@Test
